@@ -6,6 +6,6 @@ def start_sniffer():
 def stop_sniffer():
     t.stop()
 def analysis_output():
-    pass
+    wrpcap("analysis.pcap",t.results)
 def database_output():
     pass
