@@ -1,6 +1,7 @@
 from scapy.all import *
+import mysql.connector
 port = 0
-t = AsyncSniffer()
+t = AsyncSniffer(filter="tcp")
 def start_sniffer():
     t.start()
 def stop_sniffer():
@@ -8,4 +9,26 @@ def stop_sniffer():
 def analysis_output():
     wrpcap("analysis.pcap",t.results)
 def database_output():
-    pass
+    macs = []
+    IPaddrs = []
+   # payloads = []
+    packets = t.results;
+    for packet in packets:
+        macs.append((packet['Ether'].src))
+        IPaddrs.append((packet['IP'].src))
+       # payloads.append(packet['Raw'].load)
+    macSQL = "INSERT INTO dos.mac(MAC_Address) VALUES (%s);"
+    IPaddrSQL = "INSERT INTO dos.main(IP_Address) VALUES (%s);"
+   # payloadSQL = "INSERT INTO content(content) VALUES(%s);"
+    dos = mysql.connector.connect(host = "localhost",
+                                 user = "root",
+                                 database ="dos"
+                                 )
+    doscursor = dos.cursor()
+    print(macs)
+    doscursor.executemany(macSQL,macs)
+    doscursor.executemany(IPaddrSQL,IPaddrs)
+   # doscursor.executemany(payloadSQL,IPaddrs)
+    dos.commit()
+    
+
