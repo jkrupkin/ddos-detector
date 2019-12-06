@@ -7,9 +7,9 @@ def start_sniffer():
 def stop_sniffer():
     t.stop()
 def analysis_output():
-    with open('analysis_output',w) as f:
-	for results in t.results:
-		f.write(results.time - t.results[0].time)
+    with open('analysis_output','w') as f:
+        for results in t.results:
+            f.write(str(results.time - t.results[0].time) + "\n")
 def database_output():
     macs = []
     IPaddrs = []
