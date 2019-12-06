@@ -1,13 +1,15 @@
 from scapy.all import *
 import mysql.connector
 port = 0
-t = AsyncSniffer(filter="tcp")
+t = AsyncSniffer()
 def start_sniffer():
     t.start()
 def stop_sniffer():
     t.stop()
 def analysis_output():
-    wrpcap("analysis.pcap",t.results)
+    with open('analysis_output',w) as f:
+	for results in t.results:
+		f.write(results.time - t.results[0].time)
 def database_output():
     macs = []
     IPaddrs = []
