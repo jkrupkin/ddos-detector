@@ -56,4 +56,4 @@ model.add(layers.Dense(10, activation='softmax'))
 model.compile(optimizer='adam', loss='mae', metrics=['accuracy'])
 model.fit(trainer, epochs=200, steps_per_epoch = 200, validation_data=validate, validation_steps=50)
 model.summary()
-tf.saved_model.save(model, "C:\\Users\\User\\Music\\Mod")
+#tf.saved_model.save(model, "Enter filename here") #Enter filename to save model
