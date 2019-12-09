@@ -1,13 +1,14 @@
 from scapy.all import *
 import mysql.connector
 port = 0
-t = AsyncSniffer()
+t = AsyncSniffer(started_callback=print("Sniffer successfully started"))
 def start_sniffer():
     t.start()
 def stop_sniffer():
     t.stop()
 def analysis_output():
-    with open('analysis_output','w') as f:
+    with open('analysis_output_2.csv','w') as f:
+        f.write("time\n")
         for results in t.results:
             f.write(str(results.time - t.results[0].time) + "\n")
 def database_output():
